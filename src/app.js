@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import morgan from 'morgan'
+import router from './routes/ollama.route.js'
 import { NODE_ENV } from './config/env.js'
 
 const app = express()
@@ -11,9 +12,7 @@ app.use( NODE_ENV  === 'development' ? morgan('dev') : morgan('tiny') )
 app.use(express.json())
 
 // Rutas básicas
-app.get('/', (req, res) => {
-  res.json({ message: '¡Hola! Bienvenido al servidor Express básico.' })
-})
+app.use('/', router)
 
 // Middleware para manejo de errores
 app.use((err, req, res, next) => {
