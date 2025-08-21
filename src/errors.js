@@ -40,10 +40,25 @@ export const errorHandler = (error, request, response, next) => {
         statusCode = 500,
         message = 'An unexpected error occurred',
     } = error
-    // Define error handlers in a Map
+    
+    /**
+     * Map of error handlers for different error types.
+     * Each entry contains a condition function and a handler function.
+     * @type {Map<Function, Function>}
+     */
     const errorHandlers = new Map([
         [
+            /**
+             * Condition function to check for ECONNREFUSED errors.
+             * @param {Error} err - The error object to check
+             * @returns {boolean} True if the error is an ECONNREFUSED error
+             */
             err => (error.cause.code === 'ECONNREFUSED'),
+            /**
+             * Handler function for ECONNREFUSED errors.
+             * @param {Error} err - The ECONNREFUSED error object
+             * @returns {Object} JSON response with 503 status and service unavailable message
+             */
             (err) => {
                 return response.status(statusCode).json({
                     status: 'error',
@@ -52,8 +67,17 @@ export const errorHandler = (error, request, response, next) => {
             }
         ],
         [
+            /**
+             * Default condition function that always returns true.
+             * @returns {boolean} Always returns true to match any error
+             */
             // Default case: Other errors
             () => true, // Always matches
+            /**
+             * Default handler function for all other errors.
+             * @param {Error} err - The error object
+             * @returns {Object} JSON response with error status and message
+             */
             (err) => {
                 return response.status(statusCode).json({
                     status: 'error',
@@ -63,10 +87,17 @@ export const errorHandler = (error, request, response, next) => {
         ]
     ])
 
+    /**
+     * Find the first handler that matches the error.
+     * @type {Array|undefined}
+     */
     // Find the first handler that matches the error
     const matchedHandler = Array.from(errorHandlers.entries())
         .find(([condition]) => condition(error))
 
+    /**
+     * Execute the corresponding handler if a match is found.
+     */
     // Execute the corresponding handler
     if (matchedHandler) {
         const [_, handler] = matchedHandler
