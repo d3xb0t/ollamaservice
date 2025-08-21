@@ -8,15 +8,11 @@ import ollama from 'ollama'
  * @throws {Error} If there's an issue communicating with the Ollama service
  */
 const chatOllama = async (prompt) => {
-    try {
-        const res = await ollama.chat({
-            model: 'gemma3:270m',
-            messages: [{ role: 'user', content: prompt }],
-        })
-        return res.message.content
-    } catch (error) {
-        console.log(error.stack)
-    }
+    const res = await ollama.chat({
+        model: 'gemma3:270m',
+        messages: [{ role: 'user', content: prompt }],
+    })
+    return res.message.content
 }
 
 export default chatOllama

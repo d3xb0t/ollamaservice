@@ -40,9 +40,17 @@ export const errorHandler = (error, request, response, next) => {
         statusCode = 500,
         message = 'An unexpected error occurred',
     } = error
-
     // Define error handlers in a Map
     const errorHandlers = new Map([
+        [
+            err => (error.cause.code === 'ECONNREFUSED'),
+            (err) => {
+                return response.status(statusCode).json({
+                    status: 'error',
+                    error: `Ollama, Service Unavailable: ${err.message}`,
+                })
+            }
+        ],
         [
             // Default case: Other errors
             () => true, // Always matches
