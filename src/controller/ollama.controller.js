@@ -1,4 +1,5 @@
 import chatOllama from "../service/ollama.service.js"
+import { asyncErrorHandler } from "../utils.js"
 
 /**
  * Handles chat requests by sending the user's prompt to the Ollama service.
@@ -9,13 +10,9 @@ import chatOllama from "../service/ollama.service.js"
  * @param {Object} res - The HTTP response object
  * @returns {Promise<void>}
  */
-const chat = async (req, res) => {
-    try {
-        const response = await chatOllama(req.body.prompt)
-        res.status(200).json(response)
-    } catch (error) {
-        console.log(error.stack)
-    }
-}
+const chat = asyncErrorHandler(async (req, res) => {
+    const response = await chatOllama(req.body.prompt)
+    res.status(200).json(response)
+})
 
 export default chat
