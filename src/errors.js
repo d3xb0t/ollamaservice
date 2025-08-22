@@ -48,19 +48,36 @@ export const errorHandler = (error, request, response, next) => {
      */
     const errorHandlers = new Map([
         [
+            // Caso 1: Error de validación de Zod
+            (err) => err.name === 'ZodError',
+            (err) => {
+                const validationErrors = err.issues.map(issue => ({
+                    field: issue.path.join('.'),
+                    message: issue.message
+                }));
+
+                return response.status(400).json({
+                    status: 'error',
+                    error: 'Invalid request body',
+                    details: validationErrors,
+            
+                })
+            }
+        ],
+        [
             /**
              * Condition function to check for ECONNREFUSED errors.
              * @param {Error} err - The error object to check
              * @returns {boolean} True if the error is an ECONNREFUSED error
              */
-            err => (error.cause.code === 'ECONNREFUSED'),
+            (err) => (err.cause?.code === 'ECONNREFUSED'),
             /**
              * Handler function for ECONNREFUSED errors.
              * @param {Error} err - The ECONNREFUSED error object
              * @returns {Object} JSON response with 503 status and service unavailable message
              */
             (err) => {
-                return response.status(statusCode).json({
+                return response.status(503).json({
                     status: 'error',
                     error: `Ollama, Service Unavailable: ${err.message}`,
                 })

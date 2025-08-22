@@ -4,6 +4,8 @@ import morgan from 'morgan'
 import router from './routes/ollama.route.js'
 import { NODE_ENV } from './config/env.js'
 import { errorHandler } from './errors.js'
+import { validatePrompt } from './validations.js'
+import { rateLimiter } from './utils.js'
 
 /**
  * Express application instance.
@@ -21,7 +23,7 @@ const app = express()
  * @see {@link https://www.npmjs.com/package/cors|cors package}
  */
 app.use(cors({
-  origin: "*"
+  origin: "http://localhost:5173"
 }))
 
 /**
@@ -54,7 +56,7 @@ app.use(express.json())
  * @param {string} path - The root path for the router
  * @param {express.Router} router - The Ollama router instance
  */
-app.use('/', router)
+app.use('/', rateLimiter, validatePrompt, router)
 
 /**
  * Global error handling middleware.
