@@ -25,3 +25,37 @@ TypeError: fetch failed
     at async chatOllama (file:///home/d3xb0t/Dev/Node/ChatBot/backend/src/service/ollama.service.js:14:17)
     at async file:///home/d3xb0t/Dev/Node/ChatBot/backend/src/controller/ollama.controller.js:48:22
 2025-08-22 15:19:33 [INFO]: POST / 503 - 11ms
+2025-08-22 16:10:56 [INFO]: Environment variables loaded {"NODE_ENV":"development","PORT":"Defined","VERSION":"1.0.0"}
+2025-08-22 16:10:56 [INFO]: Swagger configuration loaded {"version":"1.0.0"}
+2025-08-22 16:10:56 [INFO]: Server is running on port 3000 {"port":"3000"}
+2025-08-22 16:11:08 [INFO]: Environment variables loaded {"NODE_ENV":"development","PORT":"Defined","VERSION":"1.0.0"}
+2025-08-22 16:11:08 [INFO]: Swagger configuration loaded {"version":"1.0.0"}
+2025-08-22 16:11:08 [INFO]: Server is running on port 3000 {"port":"3000"}
+2025-08-22 16:11:15 [INFO]: Environment variables loaded {"NODE_ENV":"development","PORT":"Defined","VERSION":"1.0.0"}
+2025-08-22 16:11:15 [INFO]: Swagger configuration loaded {"version":"1.0.0"}
+2025-08-22 16:11:16 [INFO]: Server is running on port 3000 {"port":"3000"}
+2025-08-22 16:11:23 [INFO]: Environment variables loaded {"NODE_ENV":"development","PORT":"Defined","VERSION":"1.0.0"}
+2025-08-22 16:11:23 [INFO]: Swagger configuration loaded {"version":"1.0.0"}
+2025-08-22 16:11:23 [INFO]: Server is running on port 3000 {"port":"3000"}
+2025-08-22 16:11:30 [INFO]: Environment variables loaded {"NODE_ENV":"development","PORT":"Defined","VERSION":"1.0.0"}
+2025-08-22 16:11:30 [INFO]: Swagger configuration loaded {"version":"1.0.0"}
+2025-08-22 16:11:30 [INFO]: Server is running on port 3000 {"port":"3000"}
+2025-08-22 16:11:44 [INFO]: Environment variables loaded {"NODE_ENV":"development","PORT":"Defined","VERSION":"1.0.0"}
+2025-08-22 16:11:44 [INFO]: Swagger configuration loaded {"version":"1.0.0"}
+2025-08-22 16:11:45 [INFO]: Server is running on port 3000 {"port":"3000"}
+2025-08-22 16:11:50 [INFO]: Environment variables loaded {"NODE_ENV":"development","PORT":"Defined","VERSION":"1.0.0"}
+2025-08-22 16:11:50 [INFO]: Swagger configuration loaded {"version":"1.0.0"}
+2025-08-22 16:11:50 [INFO]: Server is running on port 3000 {"port":"3000"}
+2025-08-22 16:14:52 [INFO]: Environment variables loaded {"NODE_ENV":"development","PORT":"Defined","VERSION":"1.0.0"}
+2025-08-22 16:14:52 [INFO]: Swagger configuration loaded {"version":"1.0.0"}
+2025-08-22 16:14:52 [INFO]: Server is running on port 3000 {"port":"3000"}
+2025-08-22 16:18:01 [INFO]: Environment variables loaded {"NODE_ENV":"development","PORT":"Defined","VERSION":"1.0.0"}
+2025-08-22 16:18:01 [INFO]: Swagger configuration loaded {"version":"1.0.0"}
+2025-08-22 16:18:01 [INFO]: Server is running on port 3000 {"port":"3000"}
+2025-08-22 16:18:07 [INFO] [683928ea-16af-4407-ab38-4b6f03fc1ea5]: Incoming request {"method":"POST","url":"/","ip":"::1","userAgent":"bruno-runtime/2.9.1"}
+2025-08-22 16:18:07 [INFO] [683928ea-16af-4407-ab38-4b6f03fc1ea5]: Received chat request {"prompt":"Hola, que puedes hacer por mi? "}
+2025-08-22 16:18:07 [INFO] [683928ea-16af-4407-ab38-4b6f03fc1ea5]: Calling Ollama service {"prompt":"Hola, que puedes hacer por mi? ","model":"gemma3:270m"}
+2025-08-22 16:18:10 [INFO] [683928ea-16af-4407-ab38-4b6f03fc1ea5]: Ollama service response received {"model":"gemma3:270m","done":true,"responseLength":78}
+2025-08-22 16:18:10 [INFO] [683928ea-16af-4407-ab38-4b6f03fc1ea5]: Sending chat response {}
+2025-08-22 16:18:10 [INFO] [683928ea-16af-4407-ab38-4b6f03fc1ea5]: Request completed {"method":"POST","url":"/","statusCode":200,"statusMessage":"OK"}
+2025-08-22 16:18:10 [INFO] [683928ea-16af-4407-ab38-4b6f03fc1ea5]: POST / 200 - 2935ms {"method":"POST","url":"/","statusCode":200,"duration":"2935ms","userAgent":"bruno-runtime/2.9.1","ip":"::1"}

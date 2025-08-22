@@ -49,7 +49,8 @@ export const errorHandler = (error, request, response, next) => {
             stack: error.stack,
             url: request.url,
             method: request.method,
-            statusCode: error.statusCode
+            statusCode: error.statusCode,
+            requestId: request.requestId
         })
     } else {
         // Log operational errors as warnings
@@ -57,7 +58,8 @@ export const errorHandler = (error, request, response, next) => {
             error: error.message,
             url: request.url,
             method: request.method,
-            statusCode: error.statusCode
+            statusCode: error.statusCode,
+            requestId: request.requestId
         })
     }
     

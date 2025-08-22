@@ -19,7 +19,8 @@ export const validatePrompt = (req, res, next) => {
       if (pattern.test(prompt)) {
         logger.warn('Prompt contains forbidden pattern', { 
           pattern: pattern.toString(), 
-          prompt: prompt.substring(0, 50) + (prompt.length > 50 ? '...' : '') 
+          prompt: prompt.substring(0, 50) + (prompt.length > 50 ? '...' : ''),
+          requestId: req.requestId
         })
         
         return res.status(400).json({
@@ -34,7 +35,8 @@ export const validatePrompt = (req, res, next) => {
   } catch (err) {
     logger.warn('Prompt validation failed', {
       error: err.message,
-      body: req.body
+      body: req.body,
+      requestId: req.requestId
     })
     next(err)
   }

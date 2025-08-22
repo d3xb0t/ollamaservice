@@ -8,6 +8,7 @@ import logger from "../logger.js"
  * @param {Object} req - The HTTP request object
  * @param {Object} req.body - The request body
  * @param {string} req.body.prompt - The user's prompt
+ * @param {string} req.requestId - The unique request ID
  * @param {Object} res - The HTTP response object
  * @returns {Promise<void>}
  * 
@@ -43,11 +44,17 @@ import logger from "../logger.js"
  *               $ref: '#/components/schemas/ErrorResponse'
  */
 const chat = asyncErrorHandler(async (req, res) => {
-    logger.info('Received chat request', { prompt: req.body.prompt })
+    logger.info('Received chat request', { 
+      prompt: req.body.prompt,
+      requestId: req.requestId
+    })
     
-    const response = await chatOllama(req.body.prompt)
+    const response = await chatOllama(req.body.prompt, req.requestId)
     
-    logger.info('Sending chat response', { response: response.message?.content })
+    logger.info('Sending chat response', { 
+      response: response.message?.content,
+      requestId: req.requestId
+    })
     res.status(200).json(response)
 })
 

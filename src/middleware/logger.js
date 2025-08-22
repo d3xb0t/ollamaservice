@@ -15,6 +15,7 @@ const requestLogger = (req, res, next) => {
       duration: `${duration}ms`,
       userAgent: headers['user-agent'],
       ip: req.ip || req.connection.remoteAddress,
+      requestId: req.requestId
     });
   });
 

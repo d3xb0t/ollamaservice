@@ -10,14 +10,13 @@ import swaggerUi from 'swagger-ui-express'
 import swaggerOptions from './config/swagger.js'
 import swaggerJsdoc from 'swagger-jsdoc'
 import requestLogger from './middleware/logger.js'
+import traceabilityMiddleware from './middleware/traceability.js'
 
 /**
  * Express application instance.
  * @type {express.Application}
  */
 const app = express()
-
-app.use(requestLogger)
 
 // Swagger setup
 /**
@@ -35,6 +34,22 @@ const swaggerSpec = swaggerJsdoc(swaggerOptions)
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 
 // Middleware
+/**
+ * Traceability middleware for request ID generation and tracking.
+ * @name traceabilityMiddleware
+ * @function
+ * @memberof app
+ */
+app.use(traceabilityMiddleware)
+
+/**
+ * Request logger middleware.
+ * @name requestLogger
+ * @function
+ * @memberof app
+ */
+app.use(requestLogger)
+
 /**
  * Enable CORS for all origins.
  * This middleware adds CORS headers to allow requests from any origin.
