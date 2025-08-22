@@ -1,5 +1,6 @@
 import { promptSchema } from "./zod.js"
 import { FORBIDDEN_PATTERNS } from "./config/patterns.js"
+import logger from "./logger.js"
 
 /**
  * Middleware function to validate the user prompt in the request body.
@@ -16,6 +17,11 @@ export const validatePrompt = (req, res, next) => {
 
     for (const pattern of FORBIDDEN_PATTERNS) {
       if (pattern.test(prompt)) {
+        logger.warn('Prompt contains forbidden pattern', { 
+          pattern: pattern.toString(), 
+          prompt: prompt.substring(0, 50) + (prompt.length > 50 ? '...' : '') 
+        })
+        
         return res.status(400).json({
           error: 'Contenido no permitido',
           message: 'El prompt contiene patrones bloqueados por seguridad (jailbreak, etc.).',
@@ -26,6 +32,10 @@ export const validatePrompt = (req, res, next) => {
     req.validatedPrompt = prompt
     next();
   } catch (err) {
+    logger.warn('Prompt validation failed', {
+      error: err.message,
+      body: req.body
+    })
     next(err)
   }
 }

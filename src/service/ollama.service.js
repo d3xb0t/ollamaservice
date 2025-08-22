@@ -1,4 +1,5 @@
 import ollama from 'ollama'
+import logger from '../logger.js'
 
 /**
  * Sends a chat prompt to the Ollama service and returns the response.
@@ -8,10 +9,19 @@ import ollama from 'ollama'
  * @throws {Error} If there's an issue communicating with the Ollama service
  */
 const chatOllama = async (prompt) => {
+    logger.info('Calling Ollama service', { prompt, model: 'gemma3:270m' })
+    
     const res = await ollama.chat({
         model: 'gemma3:270m',
         messages: [{ role: 'user', content: prompt }],
     })
+    
+    logger.info('Ollama service response received', { 
+        model: res.model, 
+        done: res.done,
+        responseLength: res.message?.content?.length 
+    })
+    
     return res.message.content
 }
 

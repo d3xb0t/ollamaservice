@@ -1,4 +1,5 @@
 import { VERSION } from '../config/env.js'
+import logger from '../logger.js'
 
 /**
  * Swagger definition configuration object.
@@ -104,5 +105,7 @@ const options = {
   swaggerDefinition,
   apis: ['./src/routes/*.js', './src/controller/*.js'],
 }
+
+logger.info('Swagger configuration loaded', { version: VERSION })
 
 export default options

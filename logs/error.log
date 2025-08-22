@@ -1,0 +1,8 @@
+2025-08-22 15:19:33 [ERROR]: Application error
+TypeError: fetch failed
+    at node:internal/deps/undici/undici:13510:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async post (file:///home/d3xb0t/Dev/Node/ChatBot/backend/node_modules/ollama/dist/browser.mjs:131:20)
+    at async Ollama.processStreamableRequest (file:///home/d3xb0t/Dev/Node/ChatBot/backend/node_modules/ollama/dist/browser.mjs:277:22)
+    at async chatOllama (file:///home/d3xb0t/Dev/Node/ChatBot/backend/src/service/ollama.service.js:14:17)
+    at async file:///home/d3xb0t/Dev/Node/ChatBot/backend/src/controller/ollama.controller.js:48:22

@@ -1,3 +1,4 @@
+import logger from './logger.js'
 /**
  * Custom error class that extends the built-in Error class.
  * Provides additional properties for error handling and categorization.
@@ -40,6 +41,25 @@ export const errorHandler = (error, request, response, next) => {
         statusCode = 500,
         message = 'An unexpected error occurred',
     } = error
+    
+    // Log the error with stack trace for debugging
+    if (statusCode >= 500) {
+        logger.error('Application error', {
+            error: error.message,
+            stack: error.stack,
+            url: request.url,
+            method: request.method,
+            statusCode: error.statusCode
+        })
+    } else {
+        // Log operational errors as warnings
+        logger.warn('Operational error', {
+            error: error.message,
+            url: request.url,
+            method: request.method,
+            statusCode: error.statusCode
+        })
+    }
     
     /**
      * Map of error handlers for different error types.
