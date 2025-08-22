@@ -9,12 +9,15 @@ import { rateLimiter } from './utils.js'
 import swaggerUi from 'swagger-ui-express'
 import swaggerOptions from './config/swagger.js'
 import swaggerJsdoc from 'swagger-jsdoc'
+import requestLogger from './middleware/logger.js'
 
 /**
  * Express application instance.
  * @type {express.Application}
  */
 const app = express()
+
+app.use(requestLogger)
 
 // Swagger setup
 /**
@@ -53,7 +56,7 @@ app.use(cors({
  * @param {string} NODE_ENV - The current Node.js environment
  * @see {@link https://www.npmjs.com/package/morgan|morgan package}
  */
-app.use( NODE_ENV  === 'development' ? morgan('dev') : morgan('tiny') )
+//app.use( NODE_ENV  === 'development' ? morgan('dev') : morgan('tiny') )
 
 /**
  * Parse incoming requests with JSON payloads.
