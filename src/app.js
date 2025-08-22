@@ -6,12 +6,30 @@ import { NODE_ENV } from './config/env.js'
 import { errorHandler } from './errors.js'
 import { validatePrompt } from './validations.js'
 import { rateLimiter } from './utils.js'
+import swaggerUi from 'swagger-ui-express'
+import swaggerOptions from './config/swagger.js'
+import swaggerJsdoc from 'swagger-jsdoc'
 
 /**
  * Express application instance.
  * @type {express.Application}
  */
 const app = express()
+
+// Swagger setup
+/**
+ * Swagger specification generated from JSDoc comments.
+ * @type {Object}
+ */
+const swaggerSpec = swaggerJsdoc(swaggerOptions)
+
+/**
+ * Serve Swagger UI documentation at /api-docs route.
+ * @name swaggerUi
+ * @function
+ * @memberof app
+ */
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 
 // Middleware
 /**

@@ -18,6 +18,8 @@
     "express-rate-limit": "^8.0.1",
     "morgan": "^1.10.1",
     "ollama": "^0.5.17",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
     "winston": "^3.17.0",
     "zod": "^4.0.17"
   },
