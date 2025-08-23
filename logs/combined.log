@@ -59,3 +59,16 @@ TypeError: fetch failed
 2025-08-22 16:18:10 [INFO] [683928ea-16af-4407-ab38-4b6f03fc1ea5]: Sending chat response {}
 2025-08-22 16:18:10 [INFO] [683928ea-16af-4407-ab38-4b6f03fc1ea5]: Request completed {"method":"POST","url":"/","statusCode":200,"statusMessage":"OK"}
 2025-08-22 16:18:10 [INFO] [683928ea-16af-4407-ab38-4b6f03fc1ea5]: POST / 200 - 2935ms {"method":"POST","url":"/","statusCode":200,"duration":"2935ms","userAgent":"bruno-runtime/2.9.1","ip":"::1"}
+2025-08-22 16:35:38 [INFO]: Environment variables loaded {"NODE_ENV":"development","PORT":"Defined","VERSION":"1.0.0"}
+2025-08-22 16:35:38 [INFO]: Swagger configuration loaded {"version":"1.0.0"}
+2025-08-22 16:35:39 [INFO]: Server is running on port 3000 {"port":"3000"}
+2025-08-22 16:36:04 [INFO] [6d5c04fa-e34e-4136-ad55-4c37b381b413]: Incoming request {"method":"OPTIONS","url":"/","ip":"::ffff:127.0.0.1","userAgent":"Mozilla/5.0 (X11; Linux x86_64; rv:142.0) Gecko/20100101 Firefox/142.0"}
+2025-08-22 16:36:04 [INFO] [6d5c04fa-e34e-4136-ad55-4c37b381b413]: Request completed {"method":"OPTIONS","url":"/","statusCode":204,"statusMessage":"No Content"}
+2025-08-22 16:36:04 [INFO] [6d5c04fa-e34e-4136-ad55-4c37b381b413]: OPTIONS / 204 - 4ms {"method":"OPTIONS","url":"/","statusCode":204,"duration":"4ms","userAgent":"Mozilla/5.0 (X11; Linux x86_64; rv:142.0) Gecko/20100101 Firefox/142.0","ip":"::ffff:127.0.0.1"}
+2025-08-22 16:36:04 [INFO] [39a8bea0-f7fd-4a4a-b7bb-ec7000596b66]: Incoming request {"method":"POST","url":"/","ip":"::ffff:127.0.0.1","userAgent":"Mozilla/5.0 (X11; Linux x86_64; rv:142.0) Gecko/20100101 Firefox/142.0"}
+2025-08-22 16:36:04 [INFO] [39a8bea0-f7fd-4a4a-b7bb-ec7000596b66]: Received chat request {"prompt":"hola, que puedes hacer por mi?"}
+2025-08-22 16:36:04 [INFO] [39a8bea0-f7fd-4a4a-b7bb-ec7000596b66]: Calling Ollama service {"prompt":"hola, que puedes hacer por mi?","model":"gemma3:270m"}
+2025-08-22 16:36:06 [INFO] [39a8bea0-f7fd-4a4a-b7bb-ec7000596b66]: Ollama service response received {"model":"gemma3:270m","done":true,"responseLength":109}
+2025-08-22 16:36:06 [INFO] [39a8bea0-f7fd-4a4a-b7bb-ec7000596b66]: Sending chat response {}
+2025-08-22 16:36:06 [INFO] [39a8bea0-f7fd-4a4a-b7bb-ec7000596b66]: Request completed {"method":"POST","url":"/","statusCode":200,"statusMessage":"OK"}
+2025-08-22 16:36:06 [INFO] [39a8bea0-f7fd-4a4a-b7bb-ec7000596b66]: POST / 200 - 2226ms {"method":"POST","url":"/","statusCode":200,"duration":"2226ms","userAgent":"Mozilla/5.0 (X11; Linux x86_64; rv:142.0) Gecko/20100101 Firefox/142.0","ip":"::ffff:127.0.0.1"}

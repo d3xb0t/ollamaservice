@@ -1,6 +1,6 @@
 // logger.js
 import winston from 'winston'
-import { format, transports } from 'winston'
+import DailyRotateFile from 'winston-daily-rotate-file'
 
 // Create a weak map to store request context
 const requestContext = new WeakMap()
@@ -18,7 +18,7 @@ export const setRequestContext = (context) => {
 /**
  * Custom format to include request ID in logs
  */
-const requestIdFormat = format((info) => {
+const requestIdFormat = winston.format((info) => {
   // In a more advanced implementation, you would retrieve the request context here
   // For now, we'll rely on passing it explicitly
   return info
@@ -41,15 +41,28 @@ const logger = winston.createLogger({
     })
   ),
   transports: [
-    new transports.File({ filename: 'logs/error.log', level: 'error' }),
-    new transports.File({ filename: 'logs/combined.log' }),
+    new DailyRotateFile({
+      filename: 'logs/error.log',
+      level: 'error',
+      datePattern: 'YYYY-MM-DD',
+      zippedArchive: true,
+      maxSize: '20m',
+      maxFiles: '7d'
+    }),
+    new DailyRotateFile({
+      filename: 'logs/combined.log',
+      datePattern: 'YYYY-MM-DD',
+      zippedArchive: true,
+      maxSize: '20m',
+      maxFiles: '7d'
+    })
   ],
 })
 
 // En desarrollo: muestra logs en consola
 if (process.env.NODE_ENV !== 'production') {
   logger.add(
-    new transports.Console({
+    new winston.transports.Console({
       format: winston.format.simple(),
     })
   )
