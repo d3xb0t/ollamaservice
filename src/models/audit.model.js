@@ -1,5 +1,16 @@
+/**
+ * Audit model.
+ * Defines the Mongoose schema and model for storing audit logs in MongoDB.
+ * @file
+ * @module models/audit
+ */
+
 import { Schema, model } from 'mongoose'
 
+/**
+ * Mongoose schema for audit logs.
+ * @type {Schema}
+ */
 const auditSchema = new Schema({
   requestId: {
     type: String,
@@ -57,6 +68,10 @@ const auditSchema = new Schema({
   }
 })
 
+/**
+ * Mongoose model for audit logs.
+ * @type {Model}
+ */
 const Audit = model('Audit', auditSchema)
 
 export default Audit

@@ -1,3 +1,10 @@
+/**
+ * Swagger configuration.
+ * Defines the Swagger specification and options for API documentation.
+ * @file
+ * @module config/swagger
+ */
+
 import { VERSION } from '../config/env.js'
 import logger from '../logger.js'
 

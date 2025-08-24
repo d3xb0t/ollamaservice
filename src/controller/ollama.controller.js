@@ -1,3 +1,10 @@
+/**
+ * Ollama chat controller.
+ * Handles incoming chat requests and interacts with the Ollama service.
+ * @file
+ * @module controller/ollama
+ */
+
 import chatOllama from "../service/ollama.service.js"
 import { asyncErrorHandler } from "../utils.js"
 import logger from "../logger.js"

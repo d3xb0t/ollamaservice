@@ -1,4 +1,10 @@
-// src/dbDriver/mongoDriver.js
+/**
+ * MongoDB driver and connection management.
+ * Handles connecting to MongoDB with retry logic and provides a connection middleware.
+ * @file
+ * @module dbDriver/mongoDriver
+ */
+
 import mongoose from 'mongoose'
 import logger from '../logger.js'
 import { setTimeout } from 'timers/promises'

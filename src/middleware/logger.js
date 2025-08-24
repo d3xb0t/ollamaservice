@@ -1,3 +1,17 @@
+/**
+ * Request logging middleware.
+ * Logs incoming requests and their responses with detailed information.
+ * @file
+ * @module middleware/logger
+ */
+
+/**
+ * Request logging middleware.
+ * Logs incoming requests and their responses.
+ * @file
+ * @module middleware/logger
+ */
+
 import logger from '../logger.js'
 
 /**

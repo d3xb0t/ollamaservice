@@ -1,3 +1,10 @@
+/**
+ * Traceability middleware.
+ * Generates and attaches a unique request ID to each incoming request for traceability.
+ * @file
+ * @module middleware/traceability
+ */
+
 import logger from '../logger.js'
 import crypto from 'crypto'
 

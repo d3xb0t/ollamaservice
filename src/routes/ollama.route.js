@@ -1,3 +1,10 @@
+/**
+ * Ollama chat routes.
+ * Defines the routes for handling chat requests.
+ * @file
+ * @module routes/ollama
+ */
+
 import { Router } from 'express'
 import chat from '../controller/ollama.controller.js'
 

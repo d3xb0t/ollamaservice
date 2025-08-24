@@ -1,6 +1,23 @@
+/**
+ * Error handling utilities.
+ * Defines custom error classes and a centralized error handler middleware.
+ * @file
+ * @module errors
+ */
+
 import logger from './logger.js'
 
+/**
+ * Custom error class for application-specific errors.
+ * @class
+ * @extends Error
+ */
 export class CustomError extends Error{
+    /**
+     * Creates a new CustomError instance.
+     * @param {string} message - The error message.
+     * @param {number} statusCode - The HTTP status code associated with the error.
+     */
     constructor(message, statusCode){
         super(message)
         this.statusCode = statusCode
@@ -11,6 +28,14 @@ export class CustomError extends Error{
     }
 }
 
+/**
+ * Centralized error handling middleware.
+ * Catches errors thrown in the application and sends appropriate responses.
+ * @param {Error} error - The error object.
+ * @param {express.Request} request - The Express request object.
+ * @param {express.Response} response - The Express response object.
+ * @param {Function} next - The next middleware function.
+ */
 export const errorHandler = (error, request, response, next) => {
     const {
         statusCode = 500,

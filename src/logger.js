@@ -1,13 +1,33 @@
+/**
+ * Logger configuration.
+ * Sets up the Winston logger with custom formats and transports.
+ * @file
+ * @module logger
+ */
+
 import winston from 'winston'
 import DailyRotateFile from 'winston-daily-rotate-file'
+
+/**
+ * A WeakMap to store request context (not fully implemented in this snippet).
+ * @type {WeakMap}
+ */
 const requestContext = new WeakMap()
 
+/**
+ * Sets the request context (placeholder function).
+ * @param {object} context - The context to set.
+ * @returns {object} The context object.
+ */
 export const setRequestContext = (context) => {
   return context
 }
 
 /**
  * Custom format to include request ID in logs
+ * @function requestIdFormat
+ * @param {object} info - The log info object.
+ * @returns {object} The modified log info object.
  */
 const requestIdFormat = winston.format((info) => {
   // In a more advanced implementation, you would retrieve the request context here
@@ -15,6 +35,10 @@ const requestIdFormat = winston.format((info) => {
   return info
 })
 
+/**
+ * The configured Winston logger instance.
+ * @type {winston.Logger}
+ */
 const logger = winston.createLogger({
   level: 'info',
   format: winston.format.combine(

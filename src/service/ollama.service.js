@@ -1,3 +1,10 @@
+/**
+ * Ollama service.
+ * Interacts with the Ollama API to send prompts and receive responses.
+ * @file
+ * @module service/ollama
+ */
+
 import ollama from 'ollama'
 import logger from '../logger.js'
 
