@@ -1,17 +1,8 @@
-// logger.js
 import winston from 'winston'
 import DailyRotateFile from 'winston-daily-rotate-file'
-
-// Create a weak map to store request context
 const requestContext = new WeakMap()
 
-/**
- * Function to set the current request context for logging
- * @param {Object} context - The request context containing requestId and other info
- */
 export const setRequestContext = (context) => {
-  // In a real implementation, you would use AsyncLocalStorage or similar
-  // For now, we'll pass the context directly in log calls
   return context
 }
 

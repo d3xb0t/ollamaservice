@@ -3,23 +3,11 @@ import { PORT } from './config/env.js'
 import logger from './logger.js'
 import { connectToDatabase } from './dbDriver/mongoDriver.js'
 
-/**
- * Inicia la aplicación después de conectar a la base de datos
- */
 const startServer = async () => {
   try {
-    // Conectar a la base de datos
     await connectToDatabase()
     
-    /** 
-     * HTTP server instance.
-     * @type {http.Server}
-     */
     const server = app.listen(PORT, () => {
-      /** 
-       * Callback function executed when the server starts listening.
-       * Logs a message to the console indicating that the server is running.
-       */
       logger.info(`Server is running on port ${PORT}`, { 
         port: PORT,
         timestamp: new Date().toISOString()
@@ -27,10 +15,6 @@ const startServer = async () => {
       console.log(`Servidor corriendo en el puerto ${PORT}`)
     })
 
-    /** 
-     * Handle graceful shutdown of the server.
-     * Closes the server connection and exits the process.
-     */
     process.on('SIGINT', () => {
       logger.info('Shutting down server...')
       server.close(() => {
@@ -44,5 +28,4 @@ const startServer = async () => {
   }
 }
 
-// Iniciar la aplicación
 startServer()

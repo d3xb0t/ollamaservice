@@ -1,15 +1,5 @@
-import z from  'zod'
+import z from 'zod'
 
-/**
- * Zod schema for validating the prompt object in the request body.
- * Ensures that the prompt is a string with specific constraints:
- * - Required field
- * - Minimum 1 character
- * - Maximum 4096 characters
- * - Trims whitespace
- * - Cannot contain only whitespace
- * @type {z.ZodObject}
- */
 export const promptSchema = z.object({
   prompt: z
     .string({ required_error: 'El campo "prompt" es obligatorio.' })
