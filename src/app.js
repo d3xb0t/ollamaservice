@@ -11,6 +11,7 @@ import swaggerOptions from './config/swagger.js'
 import swaggerJsdoc from 'swagger-jsdoc'
 import requestLogger from './middleware/logger.js'
 import traceabilityMiddleware from './middleware/traceability.js'
+import { databaseConnectionMiddleware } from './dbDriver/mongoDriver.js'
 
 /**
  * Express application instance.
@@ -34,7 +35,7 @@ const swaggerSpec = swaggerJsdoc(swaggerOptions)
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 
 // Middleware
-/**
+/** 
  * Traceability middleware for request ID generation and tracking.
  * @name traceabilityMiddleware
  * @function
@@ -42,7 +43,16 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
  */
 app.use(traceabilityMiddleware)
 
-/**
+/** 
+ * Database connection middleware.
+ * Ensures database connectivity before processing requests.
+ * @name databaseConnectionMiddleware
+ * @function
+ * @memberof app
+ */
+app.use(databaseConnectionMiddleware)
+
+/** 
  * Request logger middleware.
  * @name requestLogger
  * @function
