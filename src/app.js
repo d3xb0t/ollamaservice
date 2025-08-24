@@ -8,6 +8,7 @@
 import express from 'express'
 import cors from 'cors'
 import morgan from 'morgan'
+import helmet from 'helmet'
 import router from './routes/ollama.route.js'
 import { NODE_ENV } from './config/env.js'
 import { errorHandler } from './errors.js'
@@ -31,6 +32,10 @@ const app = express()
  * @type {object}
  */
 const swaggerSpec = swaggerJsdoc(swaggerOptions)
+
+// Use helmet middleware to enhance application security
+// Protects the app from some well-known web vulnerabilities by setting various HTTP headers
+app.use(helmet())
 
 // Swagger UI route
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
