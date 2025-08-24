@@ -17,3 +17,15 @@ const server = app.listen(PORT, () => {
   })
   console.log(`Servidor corriendo en el puerto ${PORT}`)
 })
+
+/**
+ * Handle graceful shutdown of the server.
+ * Closes the server connection and exits the process.
+ */
+process.on('SIGINT', () => {
+  logger.info('Shutting down server...')
+  server.close(() => {
+    logger.info('Server closed')
+    process.exit(0)
+  })
+})

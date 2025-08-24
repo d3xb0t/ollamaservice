@@ -1,5 +1,12 @@
 import logger from '../logger.js'
 
+/**
+ * Middleware function to log incoming requests and their responses.
+ * Records request method, URL, status code, response time, user agent, and IP address.
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @param {Function} next - Express next middleware function
+ */
 const requestLogger = (req, res, next) => {
   const start = Date.now();
 
