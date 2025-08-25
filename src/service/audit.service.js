@@ -1,4 +1,5 @@
 import Audit from '../models/audit.model.js'
+import logger from '../logger.js'
 
 /**
  * Records audit information for a transaction.
@@ -50,7 +51,7 @@ const auditTransaction = async ({
     return await auditEntry.save()
   } catch (error) {
     // Log the error but don't throw to avoid disrupting the main flow
-    console.error(`Failed to audit transaction ${requestId}:`, error)
+    logger.error(`Failed to audit transaction ${requestId}:`, { error })
     throw error // Re-throw if you want calling function to handle it
   }
 }

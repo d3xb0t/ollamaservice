@@ -35,7 +35,7 @@ const startServer = async () => {
         port: PORT,
         timestamp: new Date().toISOString()
       })
-      console.log(`Servidor corriendo en el puerto ${PORT}`)
+      logger.info(`Servidor corriendo en el puerto ${PORT}`)
     })
 
     /** 

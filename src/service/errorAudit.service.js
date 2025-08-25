@@ -1,4 +1,5 @@
 import ErrorAudit from '../models/errorAudit.model.js'
+import logger from '../logger.js'
 
 /**
  * Records error audit information.
@@ -33,7 +34,7 @@ const auditError = async ({ requestId, error, request }) => {
     return await errorEntry.save()
   } catch (auditError) {
     // Log the error but don't throw to avoid disrupting the main error flow
-    console.error(`Failed to audit error ${requestId}:`, auditError)
+    logger.error(`Failed to audit error ${requestId}:`, { error: auditError })
     // Depending on requirements, you might want to re-throw or handle differently
     throw auditError
   }
