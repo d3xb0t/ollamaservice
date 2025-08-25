@@ -6,6 +6,7 @@
  */
 
 import logger from './logger.js'
+import auditError from './service/errorAudit.service.js'
 
 /**
  * Custom error class for application-specific errors.
@@ -41,6 +42,19 @@ export const errorHandler = (error, request, response, next) => {
         statusCode = 500,
         message = 'An unexpected error occurred',
     } = error
+    
+    // Audit the error
+    auditError({
+        requestId: request.requestId,
+        error,
+        request
+    }).catch(auditError => {
+        // Log audit failure but don't interrupt main error flow
+        logger.error('Failed to audit error', {
+            error: auditError.message,
+            requestId: request.requestId
+        })
+    })
     
     if (statusCode >= 500) {
         logger.error('Application error', {
