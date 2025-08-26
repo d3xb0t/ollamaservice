@@ -2,9 +2,22 @@
 
 Este proyecto es el backend para una aplicación de chat impulsada por inteligencia artificial. Está construido con Node.js y Express, y se conecta al servicio Ollama para generar respuestas a los mensajes de los usuarios.
 
-## Nota sobre Comentarios
+## Decisiones de Arquitectura
 
-Los comentarios en el código (JSDoc) son principalmente para mi propio beneficio, ya que tengo la mala costumbre de olvidar qué hace cada parte del código unos días después de escribirlo. Si decides explorar el código, espero que también te sean útiles.
+### Funciones Flecha vs. Clases
+
+Este proyecto utiliza funciones flecha (`const myFunction = () => {}`) en lugar de clases (`class MyClass {}`) o grandes objetos literales para definir la lógica de controladores, servicios y utilidades. Esta decisión se basa en la simplicidad y naturaleza específica del proyecto:
+
+*   **Simplicidad:** Las funciones flecha ofrecen una sintaxis concisa y clara, reduciendo el "boilerplate" y facilitando la lectura del código para un proyecto de este tamaño.
+*   **Modularidad:** La estructura ya está bien organizada en módulos separados (controladores, servicios, etc.). Las funciones flecha se integran naturalmente con esta modularidad sin necesidad de envolver la lógica en clases innecesarias.
+*   **Estado:** Este backend es principalmente stateless. Las funciones puras o que operan con estado externo (como la base de datos) son suficientes. Las clases no aportan beneficios significativos en este contexto.
+*   **Consistencia con el Ecosistema Node.js:** Es un patrón muy común y aceptado en la comunidad Node.js/Express moderna.
+
+Cambiar a clases u objetos grandes no aumentaría la "madurez" del proyecto, sino que podría introducir complejidad innecesaria. La verdadera madurez proviene de buenas prácticas como la modularidad, validación, manejo de errores y logging, las cuales ya están implementadas.
+
+### Automatización de Pruebas
+
+Las pruebas unitarias e integrales para este proyecto son creadas y mantenidas con la ayuda de **Qwen Code**, un agente de ingeniería de software interactivo. Qwen Code puede generar, actualizar y verificar pruebas automáticamente, asegurando una cobertura completa y facilitando el desarrollo.
 
 ## Características
 
@@ -17,7 +30,7 @@ Los comentarios en el código (JSDoc) son principalmente para mi propio benefici
 *   **Rate Limiting:** Limita la cantidad de solicitudes por usuario para prevenir abusos.
 *   **Documentación de la API:** Documentación automática de la API utilizando Swagger/OpenAPI.
 *   **Conexión a Base de Datos:** Integración con MongoDB, incluyendo reintentos automáticos en caso de fallos de conexión.
-*   **Pruebas Unitarias e Integrales:** Incluye un conjunto completo de pruebas para garantizar la calidad del código.
+*   **Pruebas Unitarias e Integrales:** Incluye un conjunto completo de pruebas para garantizar la calidad del código, creadas con Qwen Code.
 *   **Variables de Entorno:** Configuración flexible usando `dotenv`.
 
 ## Tecnologías
