@@ -19,12 +19,12 @@ import logger from '../logger.js'
 const chatOllama = async (prompt, requestId) => {
     logger.info('Calling Ollama service', { 
       prompt, 
-      model: 'gemma3:270m',
+      model: 'qwen3:0.6b',
       requestId
     })
     
     const res = await ollama.chat({
-        model: 'gemma3:270m',
+        model: 'qwen3:0.6b',
         messages: [{ role: 'user', content: prompt }],
     })
     
@@ -35,7 +35,7 @@ const chatOllama = async (prompt, requestId) => {
         requestId
     })
     
-    return res.message.content
+    return res
 }
 
 export default chatOllama
