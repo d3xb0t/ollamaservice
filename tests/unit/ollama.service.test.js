@@ -21,7 +21,7 @@ describe('Ollama Service', () => {
   const mockPrompt = 'Hello, AI!'
   const mockRequestId = 'test-request-id'
   const mockOllamaResponse = {
-    model: 'gemma3:270m',
+    model: 'qwen3:0.6b',
     message: { role: 'assistant', content: 'Hi there!' },
     done: true
   }
@@ -36,7 +36,7 @@ describe('Ollama Service', () => {
     const result = await chatOllama(mockPrompt, mockRequestId)
 
     expect(ollama.chat).toHaveBeenCalledWith({
-      model: 'gemma3:270m',
+      model: 'qwen3:0.6b',
       messages: [{ role: 'user', content: mockPrompt }]
     })
     // Note: For simplicity in this test setup, we are not directly asserting on logger calls
@@ -52,7 +52,7 @@ describe('Ollama Service', () => {
     await expect(chatOllama(mockPrompt, mockRequestId)).rejects.toThrow(errorMessage)
 
     expect(ollama.chat).toHaveBeenCalledWith({
-      model: 'gemma3:270m',
+      model: 'qwen3:0.6b',
       messages: [{ role: 'user', content: mockPrompt }]
     })
     // Again, logger assertion is skipped for simplicity here.

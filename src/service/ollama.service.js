@@ -35,7 +35,7 @@ const chatOllama = async (prompt, requestId) => {
         requestId
     })
     
-    return res
+    return res.message.content
 }
 
 export default chatOllama
