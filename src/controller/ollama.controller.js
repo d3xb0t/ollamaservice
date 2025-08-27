@@ -51,6 +51,10 @@ import logger from "../logger.js"
  *               $ref: '#/components/schemas/ErrorResponse'
  */
 const chat = asyncErrorHandler(async (req, res) => {
+
+    const channel = req.rabbitChannel
+    console.log(channel)
+
     logger.info('Received chat request', { 
       prompt: req.body.prompt,
       requestId: req.requestId

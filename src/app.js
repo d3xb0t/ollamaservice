@@ -7,7 +7,7 @@
 
 import express from 'express'
 import cors from 'cors'
-import morgan from 'morgan'
+import { initRabbitMQ } from './middleware/rabbitMQ.js'
 import helmet from 'helmet'
 import router from './routes/ollama.route.js'
 import { NODE_ENV } from './config/env.js'
@@ -59,6 +59,8 @@ app.use(cors({
 
 // Parse JSON bodies
 app.use(express.json())
+
+app.use(initRabbitMQ)
 
 // Main route with rate limiting and validation
 app.use('/', rateLimiter, validatePrompt, router)
