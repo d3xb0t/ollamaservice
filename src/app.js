@@ -11,6 +11,7 @@
  * - Database connectivity middleware
  * - Request parsing middleware
  * - CORS configuration
+ * - Auth.js integration
  * - Rate limiting and validation
  * - Route definitions
  * - Error handling middleware
@@ -25,6 +26,7 @@
  * @see {@link https://expressjs.com/} Express.js Framework
  * @see {@link https://www.npmjs.com/package/helmet} Helmet Security Middleware
  * @see {@link https://swagger.io/specification/} OpenAPI Specification
+ * @see {@link https://authjs.dev/} Auth.js Documentation
  */
 
 import express from 'express'
@@ -32,6 +34,7 @@ import cors from 'cors'
 import { initRabbitMQ } from './middleware/rabbitMQ.js'
 import helmet from 'helmet'
 import router from './routes/ollama.route.js'
+import authRouter from './routes/auth.route.js'
 import { NODE_ENV } from './config/env.js'
 import { errorHandler } from './errors.js'
 import { validatePrompt } from './validations.js'
@@ -42,6 +45,8 @@ import swaggerJsdoc from 'swagger-jsdoc'
 import requestLogger from './middleware/logger.js'
 import traceabilityMiddleware from './middleware/traceability.js'
 import { databaseConnectionMiddleware } from './dbDriver/mongoDriver.js'
+import { ExpressAuth } from '@auth/express'
+import authConfig from './config/auth.config.js'
 
 /**
  * The Express application instance.
@@ -141,6 +146,15 @@ app.use(express.json())
 // Provides message queuing capabilities for asynchronous processing
 // Required for audit logging and other background tasks
 app.use(initRabbitMQ)
+
+// Auth.js middleware
+// Mounts Auth.js routes and middleware for authentication
+// Handles login, logout, and session management
+app.use('/auth', ExpressAuth(authConfig))
+
+// Authentication routes
+// Registers routes for user registration and other auth-related endpoints
+app.use('/auth', authRouter)
 
 // Main route with rate limiting and validation
 // Registers the primary application routes with protective middleware

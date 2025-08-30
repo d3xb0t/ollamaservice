@@ -221,6 +221,38 @@ const swaggerDefinition = {
    */
   components: {
     /**
+     * Security scheme definitions.
+     * Defines the authentication methods available for the API.
+     * These schemes can be referenced in endpoint definitions.
+     * 
+     * Security Scheme Types:
+     * - apiKey: API key authentication
+     * - http: HTTP authentication (basic, bearer)
+     * - oauth2: OAuth 2.0 authentication
+     * - openIdConnect: OpenID Connect authentication
+     */
+    securitySchemes: {
+      /**
+       * Bearer token authentication.
+       * Uses JWT tokens for authentication, compatible with Auth.js.
+       * 
+       * Token Format:
+       * - JWT (JSON Web Token)
+       * - Bearer prefix required
+       * - Base64 encoded
+       * 
+       * Usage:
+       * - Authorization header
+       * - Value: "Bearer <token>"
+       */
+      bearerAuth: {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT'
+      }
+    },
+    
+    /**
      * Schema definitions.
      * Defines the data models used in the API for requests and responses.
      * These schemas are used for validation and documentation purposes.
@@ -238,6 +270,48 @@ const swaggerDefinition = {
      * - Error objects
      */
     schemas: {
+      /**
+       * User schema.
+       * Defines the structure for user objects.
+       * Used for registration and user information.
+       * 
+       * Schema Properties:
+       * - username: User's unique identifier
+       * - email: User's email address (optional)
+       * - createdAt: Account creation timestamp
+       * - updatedAt: Account update timestamp
+       */
+      User: {
+        type: 'object',
+        properties: {
+          _id: {
+            type: 'string',
+            description: 'User unique identifier',
+            example: '5f9d3b4f9c9d6b2d7c3d4d5d'
+          },
+          username: {
+            type: 'string',
+            description: 'User\'s unique username',
+            example: 'johndoe'
+          },
+          email: {
+            type: 'string',
+            description: 'User\'s email address',
+            example: 'john.doe@example.com'
+          },
+          createdAt: {
+            type: 'string',
+            format: 'date-time',
+            description: 'Account creation timestamp'
+          },
+          updatedAt: {
+            type: 'string',
+            format: 'date-time',
+            description: 'Account last update timestamp'
+          }
+        }
+      },
+      
       /**
        * Prompt schema.
        * Defines the structure for user prompt requests.

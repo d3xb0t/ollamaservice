@@ -12,9 +12,10 @@
  * - POST / : Send a prompt to the AI chatbot
  * 
  * Middleware Chain:
- * 1. Rate limiting (applied at application level)
- * 2. Prompt validation (applied at application level)
- * 3. Controller function
+ * 1. Authentication (requireAuth)
+ * 2. Rate limiting (applied at application level)
+ * * 3. Prompt validation (applied at application level)
+ * 4. Controller function
  * 
  * @file
  * @module routes/ollama
@@ -28,6 +29,7 @@
 
 import { Router } from 'express'
 import chat from '../controller/ollama.controller.js'
+import { requireAuth } from '../middleware/auth.middleware.js'
 
 /**
  * Express router for handling Ollama chat requests.
@@ -56,7 +58,9 @@ const router = Router()
  * /:
  *   post:
  *     summary: Send a prompt to the AI chatbot
- *     description: Send a text prompt to the Ollama-powered AI chatbot and receive a response
+ *     description: Send a text prompt to the Ollama-powered AI chatbot and receive a response. Requires authentication.
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -76,6 +80,12 @@ const router = Router()
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
+ *       401:
+ *         description: Unauthorized - Authentication required
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
  *       503:
  *         description: Service unavailable, typically when Ollama is not running
  *         content:
@@ -83,39 +93,11 @@ const router = Router()
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
  * 
- * API Contract:
- * This endpoint defines a contract between the client and server for chat functionality.
- * 
- * Request Requirements:
- * - Method: POST
- * - Content-Type: application/json
- * - Body: JSON object with 'prompt' field
- * 
- * Response Guarantees:
- * - 200: Valid response with AI-generated content
- * - 400: Client error with validation details
- * - 503: Server error when dependent services are unavailable
- * 
- * Security Considerations:
- * - Input validation prevents injection attacks
- * - Rate limiting prevents abuse
- * - Forbidden pattern checking prevents jailbreak attempts
- * 
- * Performance Characteristics:
- * - Response time depends on AI model processing
- * - Asynchronous processing with request tracking
- * - Non-blocking I/O operations
- * 
- * Monitoring:
- * - Request tracing with unique IDs
- * - Performance metrics collection
- * - Error rate tracking
- * 
  * @name post_chat
  * @route {POST} /
  * @memberof module:routes/ollama
  * @since 1.0.0
  */
-router.post('/', chat)
+router.post('/', requireAuth, chat)
 
 export default router

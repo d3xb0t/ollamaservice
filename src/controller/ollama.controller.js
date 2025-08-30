@@ -51,6 +51,7 @@ import { error } from "console"
  * - Extracts prompt from request body
  * - Uses requestId for traceability
  * - Sends audit message to RabbitMQ
+ * - Includes user information in logs (if available)
  * 
  * Response Handling:
  * - Formats Ollama response for HTTP delivery
@@ -64,6 +65,7 @@ import { error } from "console"
  * @param {string} req.body.prompt - The user's prompt
  * @param {string} req.requestId - The unique request ID
  * @param {Object} req.rabbitChannel - The RabbitMQ channel for audit logging
+ * @param {Object} [req.user] - The authenticated user (if available)
  * @param {Object} res - The HTTP response object
  * @returns {Promise<void>}
  * 
@@ -71,7 +73,9 @@ import { error } from "console"
  * /:
  *   post:
  *     summary: Send a prompt to the AI chatbot
- *     description: Send a text prompt to the Ollama-powered AI chatbot and receive a response
+ *     description: Send a text prompt to the Ollama-powered AI chatbot and receive a response. Requires authentication.
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -87,6 +91,12 @@ import { error } from "console"
  *               $ref: '#/components/schemas/ChatResponse'
  *       400:
  *         description: Invalid request due to bad input
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       401:
+ *         description: Unauthorized - Authentication required
  *         content:
  *           application/json:
  *             schema:
@@ -130,16 +140,26 @@ const chat = asyncErrorHandler(async (req, res) => {
       })
     }
     
+    // Prepare audit data including user information if available
+    const auditData = {
+      ...req.headers,
+      userId: req.user?._id || null,
+      username: req.user?.username || null
+    }
+    
     // Send audit message to RabbitMQ queue
     // This provides asynchronous audit logging of requests
     // Even if this fails, the request processing continues
-    channel.sendToQueue('auditoria', Buffer.from(JSON.stringify(req.headers)))
+    channel.sendToQueue('auditoria', Buffer.from(JSON.stringify(auditData)))
     
     // Log incoming chat request for debugging and monitoring
     // Includes the prompt (for debugging) and request ID (for traceability)
     // Prompt is logged for visibility but care is taken with sensitive data
+    // Also includes user information if available
     logger.info('Received chat request', { 
       prompt: req.body.prompt,
+      userId: req.user?._id || null,
+      username: req.user?.username || null,
       requestId: req.requestId
     })
     
@@ -153,6 +173,8 @@ const chat = asyncErrorHandler(async (req, res) => {
     // Response content is logged but truncated for security and log size management
     logger.info('Sending chat response', { 
       response: response.message?.content,
+      userId: req.user?._id || null,
+      username: req.user?.username || null,
       requestId: req.requestId
     })
     

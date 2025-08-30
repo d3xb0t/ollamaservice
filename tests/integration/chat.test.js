@@ -1,30 +1,32 @@
 // tests/integration/chat.test.js
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi, beforeEach, beforeAll } from 'vitest'
 import request from 'supertest' // We can still use supertest with Vitest
 
-// Dynamically import app and mock chatOllama
-let app, chatOllamaMock
-
-beforeAll(async () => {
-  // Mock the chatOllama service to avoid external dependencies
-  // Using vi.mock with a factory function
-  vi.mock('../../src/service/ollama.service.js', () => {
-    return {
-      default: vi.fn() // This creates a mock function for the default export
-    }
-  })
-
-  // Now import app and the mocked service
-  app = (await import('../../src/app.js')).default
-  const serviceModule = await import('../../src/service/ollama.service.js')
-  chatOllamaMock = serviceModule.default
-})
-
-beforeEach(() => {
-  vi.clearAllMocks()
-})
+// Set NODE_ENV to 'test' for this test file
+process.env.NODE_ENV = 'test'
 
 describe('Chat Integration', () => {
+  let app, chatOllamaMock
+
+  beforeAll(async () => {
+    // Mock the chatOllama service to avoid external dependencies
+    // Using vi.mock with a factory function
+    vi.mock('../../src/service/ollama.service.js', () => {
+      return {
+        default: vi.fn() // This creates a mock function for the default export
+      }
+    })
+
+    // Now import app and the mocked service
+    app = (await import('../../src/app.js')).default
+    const serviceModule = await import('../../src/service/ollama.service.js')
+    chatOllamaMock = serviceModule.default
+  })
+
+  beforeEach(() => {
+    vi.clearAllMocks()
+  })
+
   it('should return 200 and the chat response for a valid request', async () => {
     const validPrompt = 'Hello, how are you?'
     const mockResponse = 'I am fine, thank you!'
@@ -34,6 +36,7 @@ describe('Chat Integration', () => {
 
     const response = await request(app)
       .post('/')
+      .set('x-test-auth', 'true') // Special header to simulate authenticated user in test mode
       .send({ prompt: validPrompt })
       .expect(200)
 
@@ -46,6 +49,7 @@ describe('Chat Integration', () => {
   it('should return 400 for a request without a body', async () => {
     const response = await request(app)
       .post('/')
+      .set('x-test-auth', 'true') // Special header to simulate authenticated user in test mode
       .send()
       .expect(400)
 
@@ -58,6 +62,7 @@ describe('Chat Integration', () => {
   it('should return 400 for a request with an empty prompt (Zod validation)', async () => {
     const response = await request(app)
       .post('/')
+      .set('x-test-auth', 'true') // Special header to simulate authenticated user in test mode
       .send({ prompt: '' })
       .expect(400)
 
@@ -71,6 +76,7 @@ describe('Chat Integration', () => {
 
     const response = await request(app)
       .post('/')
+      .set('x-test-auth', 'true') // Special header to simulate authenticated user in test mode
       .send({ prompt: forbiddenPrompt })
       .expect(400)
 
@@ -87,12 +93,26 @@ describe('Chat Integration', () => {
 
     const response = await request(app)
       .post('/')
+      .set('x-test-auth', 'true') // Special header to simulate authenticated user in test mode
       .send({ prompt: validPrompt })
       .expect(503) // Expecting the errorHandler to catch this specific error
 
     expect(response.body).toEqual({
       status: 'error',
       error: expect.stringContaining('Ollama, Service Unavailable')
+    })
+  })
+
+  it('should return 401 for requests without authentication', async () => {
+    const validPrompt = 'Hello, how are you?'
+
+    const response = await request(app)
+      .post('/')
+      .send({ prompt: validPrompt })
+      .expect(401)
+
+    expect(response.body).toEqual({
+      error: 'Unauthorized: Please log in to access this resource'
     })
   })
 
